@@ -6,10 +6,11 @@ from openprocurement.api.models import ListType
 from schematics.types.compound import ModelType
 from schematics.types.serializable import serializable
 from zope.interface import implementer
+from openprocurement.api.models import ITender, Period, get_now,TZ
 from openprocurement.tender.openua.models import (
     Tender as BaseTender, EnquiryPeriod, Lot as BaseLot, get_tender, calc_auction_end_time, validate_lots_uniq,
 )
-from openprocurement.api.models import ITender, Period, get_now, TZ
+
 from openprocurement.tender.openua.utils import calculate_business_date
 
 
@@ -18,7 +19,7 @@ ENQUIRY_STAND_STILL_TIME = timedelta(days=2)
 CLAIM_SUBMIT_TIME = timedelta(days=3)
 COMPLAINT_SUBMIT_TIME = timedelta(days=2)
 COMPLAINT_OLD_SUBMIT_TIME = timedelta(days=3)
-COMPLAINT_OLD_SUBMIT_TIME_BEFORE = datetime(2016, 7, 4, 13, 0, 0, tzinfo=TZ)
+COMPLAINT_OLD_SUBMIT_TIME_BEFORE = datetime(2016, 7, 5, tzinfo=TZ)
 TENDER_PERIOD = timedelta(days=6)
 ENQUIRY_PERIOD_TIME = timedelta(days=3)
 TENDERING_EXTRA_PERIOD = timedelta(days=2)
