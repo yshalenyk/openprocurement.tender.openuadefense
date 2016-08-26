@@ -142,6 +142,7 @@ class TenderBidResourceTest(BaseTenderUAContentWebTest):
         self.assertEqual(bid['tenderers'][0]['name'], test_organization['name'])
         self.assertIn('id', bid)
         self.assertIn(bid['id'], response.headers['Location'])
+        self.assertNotIn('transfer_token', bid)
 
         self.set_status('complete')
 
@@ -231,6 +232,7 @@ class TenderBidResourceTest(BaseTenderUAContentWebTest):
         self.assertEqual(response.status, '200 OK')
         self.assertEqual(response.content_type, 'application/json')
         self.assertEqual(response.json['data'], bid)
+        self.assertNotIn('transfer_token', response.json['data'])
 
         self.set_status('active.qualification')
 
