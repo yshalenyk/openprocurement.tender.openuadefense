@@ -51,7 +51,7 @@ class TenderUaComplaintResource(TenderComplaintResource):
         else:
             complaint.status = 'draft'
         complaint.complaintID = '{}.{}{}'.format(tender.tenderID, self.server_id, self.complaints_len(tender) + 1)
-        set_ownership(complaint, self.request)
+        acc = set_ownership(complaint, self.request)
         tender.complaints.append(complaint)
         if save_tender(self.request):
             self.LOGGER.info('Created tender complaint {}'.format(complaint.id),
@@ -60,9 +60,7 @@ class TenderUaComplaintResource(TenderComplaintResource):
             self.request.response.headers['Location'] = self.request.route_url('Tender Complaints', tender_id=tender.id, complaint_id=complaint.id)
             return {
                 'data': complaint.serialize(tender.status),
-                'access': {
-                    'token': complaint.owner_token
-                }
+                'access': acc
             }
 
     @json_view(content_type="application/json", validators=(validate_patch_complaint_data,), permission='edit_complaint')
