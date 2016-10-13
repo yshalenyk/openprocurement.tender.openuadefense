@@ -50,7 +50,7 @@ Tender Conditions Claims/Complaints
 
     complaints-tender
 
-Tender Award Complaints
+Tender Award Claims/Complaints
 ------------------------------
 
 .. graphviz::
@@ -62,10 +62,17 @@ Tender Award Complaints
             label = "complaint";
             pending; accepted; stopping; satisfied;
         }
+        subgraph cluster_claim {
+            label = "claim";
+            claim; answered;
+        }
+        claim -> answered;
         satisfied -> resolved;
         edge[style=dashed];
-        draft -> {pending,cancelled}; 
-        {pending,accepted} -> stopping;
+        draft -> {claim,pending};
+        {draft,claim,answered} -> cancelled;
+        pending -> stopping;
+        accepted -> stopping;
         edge[style=bold];
         pending -> {accepted,invalid};
         stopping -> {stopped,invalid};
